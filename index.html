@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>REC/DL — TikTok Downloader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="stage">
+    <header class="hud-top">
+      <span class="rec-dot" aria-hidden="true"></span>
+      <span class="hud-label">REC/DL</span>
+      <span class="hud-label hud-right" id="clock">00:00:00</span>
+    </header>
+
+    <section class="hero">
+      <h1 class="glitch" data-text="GRAB THE CLIP">GRAB THE CLIP</h1>
+      <p class="subtitle">Tempel link TikTok. Ambil MP4 tanpa watermark atau MP3-nya aja.</p>
+
+      <form id="form" class="deck">
+        <input
+          id="urlInput"
+          class="url-input"
+          type="url"
+          inputmode="url"
+          placeholder="https://www.tiktok.com/@user/video/xxxxxxxxxxxxx"
+          autocomplete="off"
+          required
+        />
+        <button type="submit" class="btn-fetch" id="fetchBtn">
+          <span>ANALISIS</span>
+        </button>
+      </form>
+
+      <p class="status-line" id="statusLine">STANDBY — tempel link lalu tekan ANALISIS</p>
+    </section>
+
+    <section class="preview" id="preview" hidden>
+      <div class="preview-card">
+        <div class="preview-thumb">
+          <img id="previewCover" alt="Cover video" />
+          <span class="preview-duration" id="previewDuration">00:00</span>
+        </div>
+        <div class="preview-info">
+          <p class="preview-eyebrow">SEKARANG DIPUTAR</p>
+          <h2 id="previewTitle">—</h2>
+          <p class="preview-author" id="previewAuthor">@—</p>
+
+          <div class="download-row">
+            <a class="btn-dl btn-dl-cyan" id="dlMp4" href="#">
+              <span class="dl-label">MP4</span>
+              <span class="dl-sub">video, no watermark</span>
+            </a>
+            <a class="btn-dl btn-dl-pink" id="dlMp3" href="#">
+              <span class="dl-label">MP3</span>
+              <span class="dl-sub">audio saja</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>Untuk pemakaian pribadi. Hormati hak cipta &amp; izin kreator asli.</p>
+    </footer>
+  </main>
+
+<script src="script.js"></script>
+</body>
+</html>
