@@ -1,0 +1,306 @@
+:root {
+  --bg: #0b0b0f;
+  --surface: #16161c;
+  --surface-2: #1e1e26;
+  --text: #f2f2f0;
+  --muted: #8a8a94;
+  --cyan: #25f4ee;
+  --pink: #fe2c55;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(255, 255, 255, 0.02) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+.stage {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rec-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 8px var(--pink);
+  animation: blink 1.4s step-start infinite;
+}
+
+@keyframes blink { 50% { opacity: 0.15; } }
+
+.hud-label { color: var(--muted); }
+.hud-right { margin-left: auto; color: var(--text); }
+
+.hero {
+  text-align: center;
+  padding: 64px 0 40px;
+}
+
+.glitch {
+  font-family: "Archivo Black", sans-serif;
+  font-size: clamp(2.4rem, 8vw, 4.6rem);
+  line-height: 1.02;
+  margin: 0 0 18px;
+  position: relative;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.glitch:hover::before,
+.glitch:hover::after {
+  opacity: 0.85;
+}
+
+.glitch:hover::before {
+  color: var(--cyan);
+  transform: translate(3px, -2px);
+  animation: glitch-shift 0.35s steps(2, end) infinite;
+}
+
+.glitch:hover::after {
+  color: var(--pink);
+  transform: translate(-3px, 2px);
+  animation: glitch-shift 0.4s steps(2, end) infinite reverse;
+}
+
+@keyframes glitch-shift {
+  0% { clip-path: inset(0 0 85% 0); }
+  25% { clip-path: inset(20% 0 60% 0); }
+  50% { clip-path: inset(60% 0 10% 0); }
+  75% { clip-path: inset(10% 0 70% 0); }
+  100% { clip-path: inset(40% 0 40% 0); }
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0 0 32px;
+}
+
+.deck {
+  display: flex;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 8px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.url-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  padding: 12px 14px;
+  min-width: 0;
+}
+
+.url-input::placeholder { color: var(--muted); }
+
+.btn-fetch {
+  border: none;
+  border-radius: 10px;
+  padding: 0 20px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: #0b0b0f;
+  background: linear-gradient(90deg, var(--cyan), #7bf7f2);
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn-fetch:hover { filter: brightness(1.08); }
+.btn-fetch:active { transform: scale(0.97); }
+.btn-fetch:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.status-line {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 18px;
+  letter-spacing: 0.03em;
+}
+
+.status-line.error { color: var(--pink); }
+.status-line.ok { color: var(--cyan); }
+
+.preview { padding: 8px 0 40px; }
+
+.preview-card {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.preview-thumb {
+  position: relative;
+  width: 120px;
+  height: 160px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.preview-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.preview-duration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.preview-info { flex: 1; min-width: 0; }
+
+.preview-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--pink);
+  margin: 0 0 6px;
+}
+
+.preview-info h2 {
+  font-size: 16px;
+  margin: 0 0 4px;
+  line-height: 1.35;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.preview-author {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0 0 18px;
+}
+
+.download-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-dl {
+  flex: 1;
+  min-width: 140px;
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.btn-dl:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+.btn-dl-cyan {
+  background: rgba(37, 244, 238, 0.12);
+  border: 1px solid rgba(37, 244, 238, 0.4);
+}
+.btn-dl-cyan .dl-label { color: var(--cyan); }
+
+.btn-dl-pink {
+  background: rgba(254, 44, 85, 0.12);
+  border: 1px solid rgba(254, 44, 85, 0.4);
+}
+.btn-dl-pink .dl-label { color: var(--pink); }
+
+.dl-label {
+  font-family: "Archivo Black", sans-serif;
+  font-size: 15px;
+}
+
+.dl-sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.foot {
+  margin-top: auto;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding-top: 24px;
+}
+
+@media (max-width: 480px) {
+  .deck { flex-direction: column; }
+  .btn-fetch { padding: 12px; }
+  .preview-card { flex-direction: column; }
+  .preview-thumb { width: 100%; height: 220px; }
+}
